@@ -54,7 +54,7 @@ class TestBaseModel(unittest.TestCase):
         tests the created_at mod
         """
         custom_created_at = datetime(2023, 11, 8, 12, 0, 0)
-        with unittest.mock.patch('base_model.datetime') as mock_datetime:
+        with unittest.mock.patch('models.base_model.datetime') as mock_datetime:
             mock_datetime.now.return_value = custom_created_at
             obj = BaseModel()
             self.assertEqual(obj.created_at, custom_created_at)
@@ -65,7 +65,7 @@ class TestBaseModel(unittest.TestCase):
         """
         obj = BaseModel()
         custom_updated_at = datetime(2023, 11, 8, 12, 0, 0)
-        with unittest.mock.patch('base_model.datetime') as mock_datetime:
+        with unittest.mock.patch('models.base_model.datetime') as mock_datetime:
             mock_datetime.now.return_value = custom_updated_at
             obj.save()
             self.assertEqual(obj.updated_at, custom_updated_at)
