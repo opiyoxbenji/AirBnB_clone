@@ -3,6 +3,7 @@ import cmd
 from models import storage
 from models.base_model import BaseModel
 
+
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
 
@@ -50,8 +51,30 @@ class HBNBCommand(cmd.Cmd):
         key = "{}.{}".format(args[0], args[1])
         if key in storage.all():
             print(storage.all()[key])
-        else
-        print("** no instance found **")
+        else:
+            print("** no instance found **")
+
+    def do_destroy(self, arg):
+        """Delete an instance based on the class name and id"""
+        args = arg.split()
+        if not args:
+            print("** class name missing **")
+            return
+        try:
+            class_name = args[0]
+            instance_id = args[1]
+            instances = storage.all()
+            key = class_name + "." + instance_id
+            if key in instances:
+                del instances[key]
+                storage.save()
+            else:
+                print("** no instance found **")
+        except IndexError:
+            if len(args) == 1:
+                print("** instance id missing **")
+            else:
+                print("** class doesn't exist **")
 
 
 if __name__ == '__main__':
