@@ -93,7 +93,7 @@ class HBNBCommand(cmd.Cmd):
             print([str(obj) for obj in storage.all().values() if
                    obj.__class__.__name__ == args[0]])
 
-    def do_update(self,arg):
+    def do_update(self, arg):
         """
         update instances based on their attributes
         """
@@ -123,6 +123,7 @@ class HBNBCommand(cmd.Cmd):
         attr_val = args[3]
         setattr(obj, attr_name, attr_val)
         storage.save()
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
