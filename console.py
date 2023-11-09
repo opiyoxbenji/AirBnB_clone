@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     prompt = '(hbnb) '
+    classes = {"BaseModel"}
 
     def do_quit(self, arg):
         """Quit command to exit the program"""
@@ -41,7 +42,7 @@ class HBNBCommand(cmd.Cmd):
         if len(args) == 0:
             print("** class name missing **")
             return
-        if args[0] not in storage.classes:
+        if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         if len(args) < 2:
@@ -81,11 +82,46 @@ class HBNBCommand(cmd.Cmd):
         prints all string reps of all instances
         """
         args = arg.split()
-        if len(args) == 0 or args[0] not in storage.classes:
-            print([str(obj) for obj in storage.all().values()])
+        if len(args) == 0:
+            print(print([str(obj) for obj in storage.all().values()]))
+            return
+        if args[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
         else:
             print([str(obj) for obj in storage.all().values() if
-                   obj.__class__.__name__ == arfs[0]])
+                   obj.__class__.__name__ == args[0]])
+
+    def do_update(self,arg):
+        """
+        update instances based on their attributes
+        """
+        args = arg.split()
+        if len(args) == 0:
+            print("** class name missing **")
+            return
+        if args[0] not in HBNBCommand.classes:
+            print("** class doesn't exist **")
+            return
+        if len(args) < 2:
+            print("** instance id missing **")
+            return
+        key = "{}.{}".format(args[0], args[1])
+        if key not in storage.all():
+            print("** no instance found **")
+            return
+        if len(args) < 3:
+            print("** attribute name missing **")
+            return
+        if len(args) < 4:
+            print("** value missing **")
+            return
+
+        obj = storage.all()[key]
+        attr_name = args[2]
+        attr_val = args[3]
+        setattr(obj, attr_name, attr_val)
+        storage.save()
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
