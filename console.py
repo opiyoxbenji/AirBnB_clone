@@ -163,6 +163,14 @@ class HBNBCommand(cmd.Cmd):
                 self.do_show("{} {}".format(class_name, obj_id))
             else:
                 print("** class doesn't exist **")
+        elif (len(parts) == 2 and parts[1].startswith("destroy(")
+                and parts[1].endswith(")")):
+            class_name = parts[0]
+            obj_id = parts[1][8:-1]
+            if class_name in HBNBCommand.classes:
+                self.do_destroy("{} {}".format(class_name, obj_id))
+            else:
+                print("** class doesn't exist **")
         else:
             print("*** Unknown syntax:", line)
 
