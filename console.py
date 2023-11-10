@@ -12,6 +12,7 @@ from models.review import Review
 this is the command line interface
 """
 
+
 class HBNBCommand(cmd.Cmd):
     """
     class to run the cli
@@ -102,7 +103,7 @@ class HBNBCommand(cmd.Cmd):
             return
         else:
             print([str(obj) for obj in storage.all().values() if
-                    obj.__class__.__name__ == args[0]])
+                   obj.__class__.__name__ == args[0]])
 
     def do_update(self, arg):
         """
@@ -137,7 +138,7 @@ class HBNBCommand(cmd.Cmd):
 
     def default(self, line):
         """
-        handles unknown commands including 
+        handles unknown commands including
         commands with dot notation
         """
         parts = line.split('.')
@@ -145,11 +146,31 @@ class HBNBCommand(cmd.Cmd):
             class_name = parts[0]
             if class_name in HBNBCommand.classes:
                 print([str(obj) for obj in storage.all().values() if
-                        obj.__class__.__name__ == class_name])
+                       obj.__class__.__name__ == class_name])
+            else:
+                print("** class doesn't exist **")
+        elif len(parts) == 2 and parts[1] == "count()":
+            class_name = parts[0]
+            if class_name in HBNBCommand.classes:
+                self.do_count(class_name)
             else:
                 print("** class doesn't exist **")
         else:
             print("*** Unknown syntax:", line)
+
+    def do_count(self, class_name):
+        """
+        counts the number of instances for a give class
+        """
+        if class_name in HBNBCommand.classes:
+            counter = 0
+            for key, objs in storage.all().items():
+                if class_name in key:
+                    counter += 1
+            print(counter)
+        else:
+            print("** class doesn't exist **")
+
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
