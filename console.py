@@ -8,9 +8,14 @@ from models.city import City
 from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
-
+"""
+this is the command line interface
+"""
 
 class HBNBCommand(cmd.Cmd):
+    """
+    class to run the cli
+    """
     prompt = '(hbnb) '
     classes = {"BaseModel", "User", "Place", "State", "City",
                "Amenity", "Review"}
@@ -90,14 +95,14 @@ class HBNBCommand(cmd.Cmd):
         """
         args = arg.split()
         if len(args) == 0:
-            print(print([str(obj) for obj in storage.all().values()]))
+            print(([str(obj) for obj in storage.all().values()]))
             return
         if args[0] not in HBNBCommand.classes:
             print("** class doesn't exist **")
             return
         else:
             print([str(obj) for obj in storage.all().values() if
-                   obj.__class__.__name__ == args[0]])
+                    obj.__class__.__name__ == args[0]])
 
     def do_update(self, arg):
         """
@@ -130,6 +135,21 @@ class HBNBCommand(cmd.Cmd):
         setattr(obj, attr_name, attr_val)
         storage.save()
 
+    def default(self, line):
+        """
+        handles unknown commands including 
+        commands with dot notation
+        """
+        parts = line.split('.')
+        if len(parts) == 2 and parts[1] == "all()":
+            class_name = parts[0]
+            if class_name in HBNBCommand.classes:
+                print([str(obj) for obj in storage.all().values() if
+                        obj.__class__.__name__ == class_name])
+            else:
+                print("** class doesn't exist **")
+        else:
+            print("*** Unknown syntax:", line)
 
 if __name__ == '__main__':
     HBNBCommand().cmdloop()
