@@ -1,5 +1,9 @@
 #!/usr/bin/python3
+"""
+tests base model
+"""
 from models.base_model import BaseModel
+
 
 my_model = BaseModel()
 my_model.name = "My_First_Model"
