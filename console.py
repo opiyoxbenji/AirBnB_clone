@@ -171,6 +171,15 @@ class HBNBCommand(cmd.Cmd):
                 self.do_destroy("{} {}".format(class_name, obj_id))
             else:
                 print("** class doesn't exist **")
+        elif (len(parts) == 2 and parts[1].startswith("update(")
+                and parts[1].endswith(")")):
+            class_name = parts[0]
+            update_args = parts[1][7:-1].split(', ')
+            obj_id, attr_name, attr_val = update_args
+            if class_name in HBNBCommand.classes:
+                self.do_update("{} {} {} {}".format(class_name, obj_id, attr_name, attr_val))
+            else:
+                print("** class doesn't exist **")
         else:
             print("*** Unknown syntax:", line)
 
