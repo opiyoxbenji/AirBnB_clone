@@ -3,10 +3,55 @@
 tests basemodel
 """
 import unittest
+import os
 from datetime import datetime
 from unittest.mock import MagicMock
 from models.base_model import BaseModel
+from models.engine.file_storage import FileStorage
 
+
+class TestFileStorage(unittest.TestCase):
+    """
+    test to test file storage
+    """
+    def setUp(self):
+        """
+        create a temp path for testing
+        """
+        self.test_file_path = "test_file.json"
+        FileStorage._FileStorage__file_path = self.test_file_path
+
+    def tearDown(self):
+        """
+        remove temp test file
+        """
+        if os.path.exists(self.test_file_path):
+            os.remove(self.test_file_path)
+
+    def test_new(self):
+        """"
+        tests new file
+        """
+        storage = FileStorage()
+        obj = BaseModel()
+        storage.new(obj)
+        key = "{}.{}".format(obj.__class__.__name__, obj.id)
+        self.assertIn(key, storage.all())
+
+    def test_save_empty(self):
+        """
+        test if save empty
+        """
+        storage = FileStorage()
+        storage.save()
+        self.assertTrue(os.path.exists(self.test_file_path))
+
+    def test_reload_nonexistren_file(self):
+        """
+        test if it reload a non existent file
+        """
+        storage = FileStorage()
+        storage.reload()
 
 class TestBaseModel(unittest.TestCase):
     """
