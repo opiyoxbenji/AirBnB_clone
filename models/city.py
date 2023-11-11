@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+city class created
+"""
 from models.base_model import BaseModel
 
 

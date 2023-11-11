@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+state class created
+"""
 from models.base_model import BaseModel
 
 

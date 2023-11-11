@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""
+amenity class created
+"""
 from models.base_model import BaseModel
 
 
