@@ -60,3 +60,43 @@ class TestConsole(unittest.TestCase):
             self.typing.onecmd("\n")
             self.assertEqual(f_output.getvalue(), '')
 
+    def test_create(self):
+        """
+        cmd output for create
+        """
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("create")
+            self.assertEqual("** class name missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("create ClassSom")
+            self.assertEqual("** class doesn't exist **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+        self.typing.onecmd("create User")
+        self.typing.onecmd("create User")
+
+    def test_all(self):
+        """
+        tets all
+        """
+         with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("all NonExist")
+            self.assertEqual("** class doesn't exist **\n",
+                             f_output.getvalue())
+         with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("all Place")
+            self.assertEqual("[]\n", f_output.getvalue())
+
+    def test_destroy(self):
+        """
+        tests destroy function
+        """
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("destroy")
+            self.assertEqual(" ** class name missing **\n",
+                             f_output.getvalue())
+         with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("union")
+            self.assertEqual(" ** class doesn't exist **\n",
+                             f_output.getvalue())
