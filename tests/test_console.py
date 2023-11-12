@@ -94,6 +94,68 @@ class TestConsole(unittest.TestCase):
             self.assertEqual(" ** class name missing **\n",
                              f_output.getvalue())
         with patch('sys.stdout', new=StringIO()) as f_output:
-            self.typing.onecmd("union")
+            self.typing.onecmd("destriy union")
             self.assertEqual(" ** class doesn't exist **\n",
                              f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("destroy BaseModel")
+            self.assertEqual(" ** instance id missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("destroy BaseModel 11111")
+            self.assertEqual(" ** no instance found **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("User.destroy(11111)")
+            self.assertEqual(" ** no instance found **\n",
+                             f_output.getvalue())
+
+    def test_update(self):
+        """
+        tests update
+        """
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("update")
+            self.assertEqual(" ** class name missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("update union")
+            self.assertEqual(" ** class doesn't exist **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("update BaseModel")
+            self.assertEqual(" ** instance id missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("update User 1111")
+            self.assertEqual(" ** no instance found **\n",
+                             f_output.getvalue())
+
+    def test_show(self):
+        """
+        tests show cmd
+        """
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("show")
+            self.assertEqual(" ** class name missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("show BaseModel")
+            self.assertEqual(" ** instance id missing **\n",
+                             f_output.getvalue())
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("Place.show(11111)")
+            self.assertEqual(" ** no instance found **\n",
+                             f_output.getvalue())
+
+    def test_count(self):
+        """
+        tests count
+        """
+        with patch('sys.stdout', new=StringIO()) as f_output:
+            self.typing.onecmd("BaseModel.count()")
+            self.assertEqual(int, type(eval(f_output.getvalue())))
+
+
+if __name__ == "__main__":
+    unittest.main()
