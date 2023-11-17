@@ -1,4 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
+"""
+this is the command line interface
+"""
 import cmd
 from models import storage
 from models.base_model import BaseModel
@@ -177,7 +180,8 @@ class HBNBCommand(cmd.Cmd):
             update_args = parts[1][7:-1].split(', ')
             obj_id, attr_name, attr_val = update_args
             if class_name in HBNBCommand.classes:
-                self.do_update("{} {} {} {}".format(class_name, obj_id, attr_name, attr_val))
+                self.do_update("{} {} {} {}".format(class_name,
+                               obj_id, attr_name, attr_val))
             else:
                 print("** class doesn't exist **")
         else:

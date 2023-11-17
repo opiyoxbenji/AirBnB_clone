@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-
+"""
+user class created
+"""
 from models.base_model import BaseModel
 
 
