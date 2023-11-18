@@ -1,15 +1,15 @@
 footer.footer {
-	/* color: white; */
-	height: 60px;
-	width: 100%;
-	border-top: 1px solid #cccccc;
-	display: flex;
-	position: fixed;
-	justify-content: center;
-	align-items: center;
-	bottom: 0;
+    /* color: white; */
+    height: 60px;
+    width: 100%;
+    border-top: 1px solid #cccccc;
+    display: flex;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    bottom: 0;
 }
 
 footer.footer p {
-	text-align: center;
+    text-align: center;
 }
